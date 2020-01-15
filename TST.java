@@ -1,8 +1,9 @@
 package io.techleadacademy.testing;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import io.techleadacademy.SeleniumWaits;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
@@ -66,9 +67,9 @@ public class TST {
                 e.printStackTrace();
             }
         }
-        Thread.sleep(1000);
+        new SeleniumWaits().sleep(2000);
         driver.navigate().back();
-        Thread.sleep(2000);
+        new SeleniumWaits().sleep(2000);
         driver.findElement(By.xpath("//a[.='Checkboxes']")).click();
         List<WebElement> chk = driver.findElements(By.xpath("//input[@type='checkbox']"));
         for (WebElement c:chk){
@@ -92,7 +93,7 @@ public class TST {
         WebElement box2 = driver.findElement(By.id(BoxB));
         action.dragAndDrop(box1, box2).perform();
         driver.navigate().back();
-        Thread.sleep(1000);
+        new SeleniumWaits().sleep(2000);
         driver.findElement(By.xpath("//a[.='Dropdown']")).click();
         Select drop = new Select(driver.findElement(By.id("dropdown")));
         drop.selectByValue("1");
@@ -116,7 +117,7 @@ public class TST {
         driver.findElement(By.xpath("//a[.='Dynamic Loading']")).click();
         driver.findElement(By.xpath("//a[.='Example 1: Element on page that is hidden and become visible after trigger']")).click();
         driver.findElement(By.xpath("(//button[@class='btn btn-primary'])[1]")).click();
-        Thread.sleep(5000);
+        new SeleniumWaits().sleep(2000);
         driver.findElement(By.id("username")).sendKeys("tomsmith");
         driver.findElement(By.id("pwd")).sendKeys("SuperSecretPassword");
         driver.findElement(By.xpath("//button[@type='submit']")).click();
@@ -125,21 +126,65 @@ public class TST {
         driver.navigate().back();
         driver.navigate().back();
         driver.findElement(By.xpath("//a[.='Example 2: Element on the page that is rendered after the trigger']")).click();
-        Thread.sleep(1000);
+        new SeleniumWaits().sleep(2000);
         driver.findElement(By.xpath("//button[@class='btn btn-primary']")).click();
-        Thread.sleep(5000);
+        new SeleniumWaits().sleep(5000);
         System.out.println(driver.findElement(By.xpath("//div[@id='finish']/h4")).getText());
-        Thread.sleep(1000);
+        new SeleniumWaits().sleep(3000);
         driver.navigate().back();
-        Thread.sleep(1000);
+        new SeleniumWaits().sleep(2000);
         driver.findElement(By.className("nav-link")).click();
-        Thread.sleep(1000);
-        driver.findElement(By.xpath("//a[.='File Download']")).click();
-        List<WebElement> file =  driver.findElements(By.xpath("//div[@id='content']//a"));
-        for(WebElement fl : file) {
-            fl.click();
+//        new SeleniumWaits().sleep(2000);
+//        driver.findElement(By.xpath("//a[.='File Download']")).click();
+//        List<WebElement> file =  driver.findElements(By.xpath("//div[@id='content']//a"));
+//        for(WebElement fl : file) {
+//            fl.click();
+//        }
+        //driver.findElement(By.className("nav-link")).click();
+        new SeleniumWaits().sleep(2000);
+        action.moveToElement(driver.findElement(By.xpath("//a[.='Form Authentication']"))).perform();
+        driver.findElement(By.xpath("//a[.='Form Authentication']")).click();
+        WebElement name = driver.findElement(By.name("username"));
+        name.click();
+        name.sendKeys("tomsmith");
+        WebElement psswrd = driver.findElement(By.name("password"));
+        psswrd.click();
+        psswrd.sendKeys("SuperSecretPassword");
+        driver.findElement(By.id("wooden_spoon")).click();
+        new SeleniumWaits().sleep(1000);
+        driver.findElement(By.xpath("//i[@class='icon-2x icon-signout']")).click();
+        driver.findElement(By.className("nav-link")).click();
+        driver.findElement(By.xpath("//a[.='Frames']")).click();
+        driver.findElement(By.xpath("//a[.='iFrame']")).click();
+        driver.switchTo().frame(driver.findElement(By.id("mce_0_ifr")));
+        driver.findElement(By.id("tinymce")).click();
+        driver.findElement(By.id("tinymce")).sendKeys("It is the my first letter to Cybertech!");
+        driver.switchTo().parentFrame();
+        List<WebElement> format = driver.findElements(By.xpath("//div[@id='mceu_24-body']/div"));
+        for (int k = 0; k < format.size(); k++){
+            format.get(k).click();
         }
         driver.findElement(By.className("nav-link")).click();
+        driver.findElement(By.xpath("//a[.='Horizontal Slider']")).click();
+        new SeleniumWaits().sleep(2000);
+        WebElement slider = driver.findElement(By.xpath("//div[@class='sliderContainer']/input"));
+        for(int l = 0; l <= 10;l++) {
+            slider.sendKeys(Keys.ARROW_RIGHT);
+
+        }
+        driver.findElement(By.className("nav-link")).click();
+        driver.findElement(By.xpath("//a[.='Hovers']")).click();
+        List<WebElement> elem = driver.findElements(By.xpath("//div[@class='figure']"));
+        for (WebElement el : elem){
+            action.moveToElement(el).perform();
+        }
+        driver.findElement(By.className("nav-link")).click();
+        driver.findElement(By.xpath("//a[.='Infinite Scroll']")).click();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,-5000)");
+        driver.findElement(By.className("nav-link")).click();
+
+
 
 
 
